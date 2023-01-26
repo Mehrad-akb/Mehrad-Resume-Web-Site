@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const hostname = 'localhost';
-const port = 3000;
+const port = 8080;
 
 const server = http.createServer((req, res) => {
   // Define the path to the HTML file
@@ -19,8 +19,12 @@ const server = http.createServer((req, res) => {
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(data);
     }
+    
   });
 });
+
+
+  
 
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
