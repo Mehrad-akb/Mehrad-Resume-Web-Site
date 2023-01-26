@@ -1,31 +1,24 @@
-const http = require('http');
-const fs = require('fs');
+
+const express = require('express')
 const path = require('path');
+
+const app = express()
 
 const hostname = 'localhost';
 const port = 8080;
 
-const server = http.createServer((req, res) => {
-  // Define the path to the HTML file
-  const filePath = path.join(__dirname, 'index.html');
-  // Read the HTML file
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      // Send a 500 error if there is an issue reading the file
-      res.writeHead(500, {'Content-Type': 'text/plain'});
-      res.end(err);
-    } else {
-      // Send the HTML file as the response
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      res.end(data);
-    }
-    
-  });
-});
+app.use('/css', express.static(path.join(__dirname, 'css')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/js', express.static(path.join(__dirname, 'js')))
+app.use('/scripts', express.static(path.join(__dirname, 'scripts')))
 
 
-  
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/index.html'))
+})
 
-server.listen(port, hostname, () => {
+app.listen(port, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
-});
+})
+
+
